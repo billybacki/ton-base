@@ -4,9 +4,7 @@ import React from 'react'
 export class DialogControl<T extends Record<string, React.FC<any>>> {
   constructor(comps: T) {
     for (const key in comps) {
-      if (comps.hasOwnProperty(key)) {
-        NiceModal.register(key, NiceModal.create(comps[key]))
-      }
+      NiceModal.register(key, NiceModal.create(comps[key]))
     }
   }
   // Omit : Because use @ebay/nice-modal-react create modal need id

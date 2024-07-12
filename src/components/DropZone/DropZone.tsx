@@ -1,9 +1,8 @@
 import Dropzone, { Accept } from 'react-dropzone'
 import DownloadIcon from 'assets/images/toolBox/ri_download-cloud-fill.svg'
 import { Box, Typography, styled } from '@mui/material'
-import useBreakpoint from 'hooks/useBreakpoint'
+import useBreakpoint from '@/hooks/useBreakpoint'
 import { ReactNode } from 'react'
-import React from 'react'
 
 export default function DropZone({
   getFile,

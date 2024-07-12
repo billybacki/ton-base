@@ -1,6 +1,6 @@
 import React from 'react'
 import { InputLabel as MuiInputLabel } from '@mui/material'
-import InfoIcon from '../../assets/svg/info_icon.svg'
+import InfoIcon from '../../assets/svg/info_icon.svg?react'
 
 export default function InputLabel({
   children,

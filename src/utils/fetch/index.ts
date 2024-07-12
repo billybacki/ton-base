@@ -56,4 +56,4 @@ const instance = (baseuri: string) => ({
   }
 })
 
-export const ApiInstance = instance(process.env.NEXT_PUBLIC_REQUEST_BASEURL || '')
+export const ApiInstance = instance(import.meta.env.VITE_PUBLIC_REQUEST_BASEURL || '')

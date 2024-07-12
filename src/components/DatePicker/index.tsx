@@ -4,7 +4,7 @@ import { DateTimePicker, DateTimePickerProps } from '@mui/x-date-pickers/DateTim
 import dayjs, { Dayjs } from 'dayjs'
 import { renderTimeViewClock } from '@mui/x-date-pickers/timeViewRenderers'
 import utc from 'dayjs/plugin/utc'
-import AccessTimeIcon from 'assets/svg/access-time.svg'
+import AccessTimeIcon from 'assets/svg/access-time.svg?react'
 
 interface IProps extends DateTimePickerProps<Dayjs> {
   timezone?: 'default' | 'system' | 'UTC' | string

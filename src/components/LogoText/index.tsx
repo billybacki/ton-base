@@ -1,6 +1,5 @@
 import { styled } from '@mui/material'
 import React from 'react'
-import Image from 'next/image'
 
 const Wrapper = styled('div')({})
 
@@ -33,7 +32,7 @@ export default function LogoText({
         }
       }}
     >
-      {typeof logo === 'string' ? <Image src={logo as string} alt={`${text} logo`} /> : logo}
+      {typeof logo === 'string' ? <img src={logo as string} alt={`${text} logo`} /> : logo}
       <span>{text}</span>
     </Wrapper>
   )

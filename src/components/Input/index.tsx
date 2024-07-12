@@ -2,7 +2,7 @@ import React, { ChangeEvent, InputHTMLAttributes, useCallback } from 'react'
 import { InputBase, styled, Typography } from '@mui/material'
 import { inputBaseClasses } from '@mui/material/InputBase'
 import InputLabel from './InputLabel'
-import { escapeRegExp, isAddress, isEmail, isURL } from '../../utils'
+import { escapeRegExp, isEmail, isURL } from '../../utils'
 
 export interface InputProps {
   placeholder?: string
@@ -12,7 +12,7 @@ export interface InputProps {
   disabled?: boolean
   focused?: boolean
   outlined?: boolean
-  type?: React.HTMLInputTypeAttribute | 'address' | 'unumber' | 'string' | 'uint'
+  type?: React.HTMLInputTypeAttribute | 'unumber' | 'string' | 'uint'
   endAdornment?: React.ReactNode
   maxWidth?: string | number
   height?: string | number
@@ -112,11 +112,6 @@ export default function Input({
     (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement, Element>) => {
       if (type === 'url') {
         if (!isURL(e.target.value)) {
-          e.target.value = ''
-          onValue && onValue('')
-        }
-      } else if (type === 'address') {
-        if (!isAddress(e.target.value)) {
           e.target.value = ''
           onValue && onValue('')
         }

@@ -1,9 +1,9 @@
 import React from 'react'
 import { Dialog, useTheme, Box, Slide, Fade, SlideProps, FadeProps } from '@mui/material'
-import useModal from 'hooks/useModal'
+import useModal from '@/hooks/useModal'
 import { useRef } from 'react'
-import { CloseIcon } from 'components/Global'
-import useBreakpoint from 'hooks/useBreakpoint'
+import { CloseIcon } from '@/components/Global'
+import useBreakpoint from '@/hooks/useBreakpoint'
 
 interface Props {
   children?: React.ReactNode

@@ -107,7 +107,6 @@ export default function Select(props: Props) {
           }
         }}
         autoFocus={autoFocus}
-        placeholder={placeholder}
       >
         {children}
       </Menu>

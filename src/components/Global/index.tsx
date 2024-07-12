@@ -42,6 +42,7 @@ export function ExternalLink({
   const handleClick = useCallback(
     (event: React.MouseEvent<HTMLAnchorElement>) => {
       if (target === '_blank' || event.ctrlKey || event.metaKey) {
+        return
       } else {
         event.preventDefault()
         window.location.href = href

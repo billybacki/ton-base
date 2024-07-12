@@ -1,7 +1,6 @@
 import { styled, Pagination, Typography, Box } from '@mui/material'
-import React from 'react'
 
-export const StyledPagination = styled(Pagination)(({ theme }) => ({
+const StyledPagination = styled(Pagination)(({ theme }) => ({
   color: theme.palette.text.secondary,
   '& .MuiPaginationItem-root': { opacity: 0.5 },
   '& .MuiPaginationItem-page.Mui-selected': {
@@ -18,7 +17,6 @@ interface PaginationProps {
   siblingCount?: number
   boundaryCount?: number
   // setPage: (page: number) => void
-  // eslint-disable-next-line @typescript-eslint/ban-types
   onChange?: (event: object, page: number) => void
   perPage?: number
   total?: number

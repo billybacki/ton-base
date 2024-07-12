@@ -12,9 +12,9 @@ import {
 } from '@mui/material'
 
 import { useModal } from '@ebay/nice-modal-react'
-import CloseSvg from 'assets/svg/close-light.svg'
-import { useUpdateThemeMode } from 'state/application/hooks'
-import useBreakpoint from 'hooks/useBreakpoint'
+import CloseSvg from 'assets/svg/close-light.svg?react'
+import { useUpdateThemeMode } from '@/state/application/hooks'
+import useBreakpoint from '@/hooks/useBreakpoint'
 
 export interface BaseDialogProps extends Omit<MuiDialogProps, 'open' | 'content'> {
   onClose?: () => void

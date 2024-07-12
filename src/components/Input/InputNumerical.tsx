@@ -1,9 +1,8 @@
 import { InputHTMLAttributes, useCallback, ChangeEvent } from 'react'
 import { Box, Button } from '@mui/material'
 import Input, { InputProps } from './index'
-import { escapeRegExp } from 'utils'
+import { escapeRegExp } from '@/utils'
 import InputLabel from './InputLabel'
-import React from 'react'
 
 const inputRegex = RegExp(`^\\d*(?:\\\\[.])?\\d*$`) // match escaped "." characters via in a non-capturing group
 

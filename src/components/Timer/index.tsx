@@ -1,4 +1,3 @@
-import React from 'react'
 import { useEffect, useState } from 'react'
 
 const formatTime = (d: number, h: number, m: number, s: number) => {

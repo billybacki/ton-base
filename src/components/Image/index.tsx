@@ -35,7 +35,6 @@ export default function Image({
   }, [size, style])
 
   return (
-    // eslint-disable-next-line @next/next/no-img-element
     <StyleImage
       {...rest}
       src={srcStr}

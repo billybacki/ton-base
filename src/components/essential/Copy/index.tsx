@@ -2,7 +2,7 @@ import React from 'react'
 import { Box } from '@mui/material'
 import CopyIcon from 'assets/svg/copy_icon.svg'
 import CheckIcon from '@mui/icons-material/Check'
-import useCopyClipboard from 'hooks/useCopyClipboard'
+import useCopyClipboard from '@/hooks/useCopyClipboard'
 
 interface Props {
   toCopy: string
