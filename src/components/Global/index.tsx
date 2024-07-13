@@ -1,5 +1,5 @@
 import { HTMLProps, useCallback } from 'react'
-import { IconButton, Link, SxProps, Theme } from '@mui/material'
+import { IconButton, Link, SxProps, Theme, keyframes, styled } from '@mui/material'
 import MuiCloseIcon from '@mui/icons-material/Close'
 import React from 'react'
 
@@ -65,3 +65,46 @@ export function ExternalLink({
     </Link>
   )
 }
+
+const pulse = keyframes`
+  0% { transform: scale(1); }
+  60% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+`
+
+export const AnimatedWrapper = styled('div')(`
+pointer-events: none;
+display: flex;
+align-items: center;
+justify-content: center;
+height: 100%;
+width: 100%;
+`)
+
+export const AnimatedImg = styled('div')(`
+animation: ${pulse} 800ms linear infinite;
+& > * {
+  width: 72px;
+})
+`)
+
+export const Dots = styled('span')(`
+  &::after {
+    display: inline-block;
+    animation: ellipsis 1.25s infinite;
+    content: '.';
+    width: 1em;
+    text-align: left;
+  }
+  @keyframes ellipsis {
+    0% {
+      content: '.';
+    }
+    33% {
+      content: '..';
+    }
+    66% {
+      content: '...';
+    }
+  }
+`)
