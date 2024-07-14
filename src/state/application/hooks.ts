@@ -110,7 +110,9 @@ export function useUpdateThemeMode() {
   const getLocalThemeMode = (): PaletteMode => {
     const str = localStorage.getItem(LOCAL_THEME_NAME)
     if (!str || !['dark', 'light'].includes(str)) {
-      return DEFAULT_THEME
+      const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+
+      return isDark ? 'dark' : DEFAULT_THEME
     }
     return str as PaletteMode
   }

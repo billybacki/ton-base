@@ -1,13 +1,98 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React + TS</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>title</title>
+  <!-- Facebook Meta Tags -->
+  <meta property="og:url" content="" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="title" />
+  <meta property="og:description" content="" />
+
+  <!-- Twitter Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="title" />
+  <meta name="twitter:description" content="" />
+
+  <style>
+    @keyframes glow {
+      from {
+        transform: scale(1);
+      }
+
+      to {
+        transform: scale(1.1);
+      }
+    }
+
+    .app-loader {
+      opacity: 0;
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      transition: 0.2s all;
+    }
+
+    .app-loader img {
+      width: 140px;
+      height: 140px;
+      -webkit-animation: glow 1s ease-in-out infinite alternate;
+      -moz-animation: glow 1s ease-in-out infinite alternate;
+      animation: glow 1s ease-in-out infinite alternate;
+      opacity: 0;
+      transition: 0.2s opacity;
+    }
+
+    .app-loader-dark {
+      background: #222830;
+      opacity: 1;
+    }
+
+    .app-loader-light {
+      background: #f8f9fb;
+      opacity: 1;
+    }
+
+    .app-loader-hidden {
+      opacity: 0
+    }
+
+    .app-loader-none {
+      display: none
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app-loader">
+    <img src="/vite.svg" />
+  </div>
+  <script>
+    setTimeout(() => {
+      const loader = document.querySelector(".app-loader");
+      const LOCAL_THEME_NAME = localStorage.getItem("LOCAL_THEME_NAME");
+      var img = new Image();
+      img.onload = function () {
+        loader.querySelector("img").style.opacity = "1";
+      };
+      img.src = "/vite.svg";
+
+      const theme = LOCAL_THEME_NAME || "dark";
+      loader.classList.add(`app-loader-${theme}`);
+    }, 300);
+  </script>
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+
 </html>
