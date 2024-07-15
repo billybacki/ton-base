@@ -1,13 +1,13 @@
 import { getContractAddress } from '@/constants/addresses'
 import Counter from '../contracts/counter'
 import { useTonClient } from './useTonClient'
-import { useTonConnect } from './useTonConnect'
+import { useGetSender } from './useGetSender'
 import { Address, OpenedContract } from '@ton/core'
 import { useRequest } from 'ahooks'
 
 export function useCounterContract() {
   const client = useTonClient()
-  const { sender } = useTonConnect()
+  const getSender = useGetSender()
 
   const { data: counterContract } = useRequest(
     async () => {
@@ -37,7 +37,7 @@ export function useCounterContract() {
     value,
     contractAddress: counterContract?.address.toString(),
     sendIncrement: () => {
-      return counterContract?.sendIncrement(sender)
+      return counterContract?.sendIncrement(getSender())
     }
   }
 }
