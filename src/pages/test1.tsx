@@ -15,7 +15,8 @@ export default function Test1() {
   const jettonTransfer = useJettonTransfer(testJetton)
   const balance = useJettonBalance(testJetton)
   console.log('🚀 ~ Test1 ~ balance:', balance)
-  useTonBalance(address)
+  const tonBalance = useTonBalance(address)
+  console.log('🚀 ~ Test1 ~ tonBalance:', tonBalance)
 
   const { value: counterValue, contractAddress, sendIncrement } = useCounterContract()
 

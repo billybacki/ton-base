@@ -20,7 +20,7 @@ export function useTonTransfer() {
             amount: toNano(value).toString(),
             // todo src type
             payload: body
-              ? beginCell().storeStringTail(body).endCell().toBoc({ idx: false }).toString('base64')
+              ? beginCell().storeUint(0, 64).storeStringTail(body).endCell().toBoc({ idx: false }).toString('base64')
               : undefined
           }
         ]
@@ -69,7 +69,7 @@ export function useJettonTransfer(jettonMasterContract: string) {
         .storeAddress(Address.parse(to)) // destination:MsgAddress
         .storeAddress(Address.parse(tonAddress)) // response_destination:MsgAddress
         .storeUint(0, 1) // custom_payload:(Maybe ^Cell)
-        .storeCoins(toNano('0.01')) // forward_ton_amount:(VarUInteger 16)
+        .storeCoins(toNano('0')) // forward_ton_amount:(VarUInteger 16)
         .storeUint(0, 1) // forward_payload:(Either Cell ^Cell)
         .endCell()
 
