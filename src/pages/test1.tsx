@@ -1,3 +1,5 @@
+import { Currency } from '@/constants/token/currency'
+import { CurrencyAmount } from '@/constants/token/currencyAmount'
 import { useJettonBalance, useTonBalance } from '@/hooks/useBalance'
 import { useCounterContract } from '@/hooks/useCounterContract'
 import { useJettonTransfer, useTonTransfer } from '@/hooks/useTransfer'
@@ -17,6 +19,12 @@ export default function Test1() {
   console.log('🚀 ~ Test1 ~ balance:', balance)
   const tonBalance = useTonBalance(address)
   console.log('🚀 ~ Test1 ~ tonBalance:', tonBalance)
+  const currency = Currency.getNativeCurrency()
+  console.log(
+    '🚀 ~ Test1 ~ balance:',
+    balance,
+    CurrencyAmount.fromRawAmount(currency, tonBalance || '').toSignificant()
+  )
 
   const { value: counterValue, contractAddress, sendIncrement } = useCounterContract()
 

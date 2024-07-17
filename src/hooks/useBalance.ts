@@ -11,7 +11,7 @@ export function useTonBalance(address?: string) {
     async () => {
       if (!client || !address) return undefined
       const res = await client.getBalance(Address.parse(address))
-      return res
+      return res.toString()
     },
     {
       refreshDeps: [client, address]
@@ -39,5 +39,5 @@ export function useJettonBalance(jettonMasterContract: string) {
     }
   )
 
-  return balance
+  return balance?.toString()
 }
