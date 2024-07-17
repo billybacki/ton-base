@@ -3,7 +3,7 @@ import invariant from 'tiny-invariant'
 import { validateSolidityTypeInstance } from '../utils'
 import { SolidityType } from '../constants'
 
-const ZERO_ADDRESS = ''
+export const ZERO_ADDRESS = 'EQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAM9c'
 
 export class Currency {
   public readonly address: string

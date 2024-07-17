@@ -1,7 +1,15 @@
 import { Currency } from '@/constants/token/currency'
 import { CurrencyAmount } from '@/constants/token/currencyAmount'
-import { parseUnits } from '@ethersproject/units'
+import BigNumber from 'bignumber.js'
 import JSBI from 'jsbi'
+
+export function formatUnits(value: string | number, decimals = 9) {
+  return new BigNumber(value).dividedBy(new BigNumber(10).pow(decimals)).toString()
+}
+
+export function parseUnits(value: string | number, decimals = 9) {
+  return new BigNumber(value).multipliedBy(new BigNumber(10).pow(decimals))
+}
 
 export function tryParseAmount(value?: string, currency?: Currency): CurrencyAmount | undefined {
   if (!value || !currency) {

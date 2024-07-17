@@ -1,5 +1,11 @@
+import { ZERO_ADDRESS } from '@/constants/token/currency'
+
 export function getCurrentTimeStamp(date?: Date | string | number) {
   return Number(((date ? new Date(date) : new Date()).getTime() / 1000).toFixed())
+}
+
+export function isZeroAddress(address: string) {
+  return address === ZERO_ADDRESS
 }
 
 export function escapeRegExp(string: string): string {

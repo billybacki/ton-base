@@ -38,12 +38,12 @@ export class CurrencyAmount extends Fraction {
   }
 
   public add(other: CurrencyAmount): CurrencyAmount {
-    invariant(currencyEquals(this.currency, other.currency), 'TOKEN')
+    invariant(currencyEquals(this.currency, other.currency), 'JETTON')
     return new CurrencyAmount(this.currency, JSBI.add(this.raw, other.raw))
   }
 
   public subtract(other: CurrencyAmount): CurrencyAmount {
-    invariant(currencyEquals(this.currency, other.currency), 'TOKEN')
+    invariant(currencyEquals(this.currency, other.currency), 'JETTON')
     return new CurrencyAmount(this.currency, JSBI.subtract(this.raw, other.raw))
   }
 

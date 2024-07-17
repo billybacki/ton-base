@@ -21,7 +21,6 @@
     "@ebay/nice-modal-react": "1.2.8",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
-    "@ethersproject/units": "^5.7.0",
     "@mui/icons-material": "^5.14.18",
     "@mui/lab": "5.0.0-alpha.111",
     "@mui/material": "^5.16.1",
@@ -59,7 +58,6 @@
   "devDependencies": {
     "@commitlint/cli": "^18.4.2",
     "@commitlint/config-conventional": "^18.4.2",
-    "@ethersproject/abi": "^5.7.0",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@typescript-eslint/eslint-plugin": "^7.13.1",
