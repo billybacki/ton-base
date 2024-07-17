@@ -10,7 +10,6 @@ import { TonConnectUIProvider } from '@tonconnect/ui-react'
 
 const container = document.getElementById('root')
 const root = createRoot(container!)
-
 // todo
 const manifestUrl =
   'https://raw.githubusercontent.com/ton-community/tutorials/main/03-client/test/public/tonconnect-manifest.json'
@@ -60,6 +59,7 @@ root.render(
       //   twaReturnUrl: 'https://t.me/DemoDappWithTonConnectBot/demo'
       // }}
     >
+      {' '}
       <StateProvider>
         <MuiThemeProvider>
           <NiceModal.Provider>
