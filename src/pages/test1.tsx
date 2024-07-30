@@ -1,7 +1,6 @@
-import { Currency } from '@/constants/token/currency'
-import { CurrencyAmount } from '@/constants/token/currencyAmount'
 import { useJettonBalance, useTonBalance } from '@/hooks/useBalance'
 import { useCounterContract } from '@/hooks/useCounterContract'
+import { useJettonMasterData } from '@/hooks/useJetton'
 import { useJettonTransfer, useTonTransfer } from '@/hooks/useTransfer'
 import { shortenHash } from '@/utils'
 import { Button, Container, Divider, Paper, Stack, Typography } from '@mui/material'
@@ -15,16 +14,11 @@ export default function Test1() {
   const address = useTonAddress()
   const tonTransfer = useTonTransfer()
   const jettonTransfer = useJettonTransfer(testJetton)
-  const balance = useJettonBalance(testJetton)
-  console.log('🚀 ~ Test1 ~ balance:', balance)
+  const { balance } = useJettonBalance(testJetton)
+  useJettonMasterData(testJetton)
+  console.log('🚀 ~ Test1 ~ balance:', balance?.toSignificant(), balance?.currency)
   const tonBalance = useTonBalance(address)
-  console.log('🚀 ~ Test1 ~ tonBalance:', tonBalance)
-  const currency = Currency.getNativeCurrency()
-  console.log(
-    '🚀 ~ Test1 ~ balance:',
-    balance,
-    CurrencyAmount.fromRawAmount(currency, tonBalance || '').toSignificant()
-  )
+  console.log('🚀 ~ Test1 ~ tonBalance:', tonBalance?.toSignificant())
 
   const { value: counterValue, contractAddress, sendIncrement } = useCounterContract()
 

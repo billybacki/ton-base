@@ -1,8 +1,11 @@
 import { useRequest } from 'ahooks'
 import { useTonClient } from './useTonClient'
 import { Address } from '@ton/core'
-import { useUserJettonWallet } from './useTransfer'
 import { JettonWallet } from '@ton/ton'
+import { CurrencyAmount } from '@/constants/token/currencyAmount'
+import { useJettonMasterData, useUserJettonWallet } from './useJetton'
+import { useMemo } from 'react'
+import { Currency } from '@/constants/token/currency'
 
 export function useTonBalance(address?: string) {
   const client = useTonClient()
@@ -11,9 +14,13 @@ export function useTonBalance(address?: string) {
     async () => {
       if (!client || !address) return undefined
       const res = await client.getBalance(Address.parse(address))
-      return res.toString()
+      return CurrencyAmount.ether(res.toString())
     },
     {
+      ready: !!client && !!address,
+      cacheKey: `useTonBalance-${address}`,
+      staleTime: 10_000,
+      pollingInterval: 10_000,
       refreshDeps: [client, address]
     }
   )
@@ -24,20 +31,38 @@ export function useTonBalance(address?: string) {
 export function useJettonBalance(jettonMasterContract: string) {
   const client = useTonClient()
   const userJWA = useUserJettonWallet(jettonMasterContract)
+  const jettonMasterData = useJettonMasterData(jettonMasterContract)
 
-  const { data: balance } = useRequest(
+  const { data: rawBalance } = useRequest(
     async () => {
       if (!client || !userJWA) return undefined
       const contract = JettonWallet.create(userJWA)
 
       const data = await contract.getBalance(client.provider(contract.address))
 
-      return data
+      return data?.toString()
     },
     {
+      ready: !!client && !!userJWA,
+      cacheKey: `useJettonBalance-${userJWA}`,
+      staleTime: 10_000,
+      pollingInterval: 10_000,
       refreshDeps: [client, userJWA]
     }
   )
 
-  return balance?.toString()
+  const balance = useMemo(() => {
+    if (!jettonMasterData || !rawBalance) return undefined
+    const metadata = jettonMasterData.metadata
+    const currency = new Currency(
+      metadata.address,
+      Number(metadata.decimals),
+      metadata.symbol,
+      metadata.name,
+      metadata.image
+    )
+    return new CurrencyAmount(currency, rawBalance)
+  }, [jettonMasterData, rawBalance])
+
+  return { rawBalance, balance }
 }

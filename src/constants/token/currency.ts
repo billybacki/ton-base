@@ -1,12 +1,13 @@
 import JSBI from 'jsbi'
-import invariant from 'tiny-invariant'
 import { validateSolidityTypeInstance } from '../utils'
 import { SolidityType } from '../constants'
+import { Address } from '@ton/core'
+import invariant from 'tiny-invariant'
 
-export const ZERO_ADDRESS = 'EQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAM9c'
+export const ZERO_ADDRESS = '0:0000000000000000000000000000000000000000000000000000000000000000'
 
 export class Currency {
-  public readonly address: string
+  public readonly address: Address
   public readonly decimals: number
   public readonly symbol?: string
   public readonly name?: string
@@ -22,7 +23,10 @@ export class Currency {
   constructor(address: string, decimals: number, symbol?: string, name?: string, logo?: string) {
     validateSolidityTypeInstance(JSBI.BigInt(decimals), SolidityType.uint8)
 
-    this.address = address
+    const addr = Address.parse(address)
+    invariant(Address.isAddress(addr), `${address} is not a Address.`)
+
+    this.address = addr
     this.decimals = decimals
     this.symbol = symbol
     this.name = name
@@ -48,15 +52,10 @@ export class Currency {
   }
 
   public get isNative() {
-    return this.address === ZERO_ADDRESS
+    return this.address.toRawString() === ZERO_ADDRESS
   }
 
   public setLogo(logo: string) {
     this.logo = logo
-  }
-
-  public sortsBefore(other: Currency): boolean {
-    invariant(this.address !== other.address, 'ADDRESSES')
-    return this.address.toLowerCase() < other.address.toLowerCase()
   }
 }

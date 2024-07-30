@@ -2,9 +2,7 @@ import { useCallback } from 'react'
 import { Address, beginCell, toNano } from '@ton/core'
 import { CHAIN, useTonAddress, useTonConnectUI } from '@tonconnect/ui-react'
 import { CURRENT_NETWORK_NAME } from '@/constants/config'
-import { useTonClient } from './useTonClient'
-import { useRequest } from 'ahooks'
-import { JettonMaster } from '@ton/ton'
+import { useUserJettonWallet } from './useJetton'
 
 export function useTonTransfer() {
   const [tonConnect] = useTonConnectUI()
@@ -30,29 +28,6 @@ export function useTonTransfer() {
   )
 }
 
-export function useUserJettonWallet(jettonMasterContract?: string) {
-  const client = useTonClient()
-  const tonAddress = useTonAddress()
-
-  const { data } = useRequest(
-    async () => {
-      if (!jettonMasterContract || !client) return
-      const jettonMasterAddress = Address.parse(jettonMasterContract)
-      const userAddress = Address.parse(tonAddress)
-
-      const jettonMaster = client.open(JettonMaster.create(jettonMasterAddress))
-
-      const userJWA = await jettonMaster.getWalletAddress(userAddress)
-      return userJWA
-    },
-    {
-      refreshDeps: [client, jettonMasterContract]
-    }
-  )
-
-  return data
-}
-
 export function useJettonTransfer(jettonMasterContract: string) {
   const [tonConnect] = useTonConnectUI()
   const tonAddress = useTonAddress()
@@ -61,7 +36,7 @@ export function useJettonTransfer(jettonMasterContract: string) {
 
   return useCallback(
     async (amount: bigint, to: string) => {
-      if (!userJWA) return
+      if (!userJWA || !tonAddress) return
       const body = beginCell()
         .storeUint(0xf8a7ea5, 32) // jetton Transfer code
         .storeUint(new Date().getTime(), 64) // query_id:uint64
