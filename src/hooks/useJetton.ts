@@ -30,7 +30,7 @@ export type JettonMasterData = {
   holders_count: number
   metadata: JettonMetadata
   mintable: boolean
-  total_supply: number
+  total_supply: string
   verification: JettonVerificationType
 }
 
