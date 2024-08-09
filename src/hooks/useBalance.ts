@@ -6,9 +6,11 @@ import { CurrencyAmount } from '@/constants/token/currencyAmount'
 import { useJettonMasterData, useUserJettonWallet } from './useJetton'
 import { useMemo } from 'react'
 import { Currency } from '@/constants/token/currency'
+import { useBlockNumber } from '@/provider/BlockSSEProvider'
 
 export function useTonBalance(address?: string) {
   const client = useTonClient()
+  const block = useBlockNumber()
 
   const { data: balance } = useRequest(
     async () => {
@@ -19,9 +21,8 @@ export function useTonBalance(address?: string) {
     {
       ready: !!client && !!address,
       cacheKey: `useTonBalance-${address}`,
-      staleTime: 10_000,
-      pollingInterval: 10_000,
-      refreshDeps: [client, address]
+      staleTime: 5_000,
+      refreshDeps: [client, address, block]
     }
   )
 
@@ -32,6 +33,7 @@ export function useJettonBalance(jettonMasterContract: string) {
   const client = useTonClient()
   const userJWA = useUserJettonWallet(jettonMasterContract)
   const jettonMasterData = useJettonMasterData(jettonMasterContract)
+  const block = useBlockNumber()
 
   const { data: rawBalance } = useRequest(
     async () => {
@@ -45,9 +47,8 @@ export function useJettonBalance(jettonMasterContract: string) {
     {
       ready: !!client && !!userJWA,
       cacheKey: `useJettonBalance-${userJWA}`,
-      staleTime: 10_000,
-      pollingInterval: 10_000,
-      refreshDeps: [client, userJWA]
+      staleTime: 5_000,
+      refreshDeps: [client, userJWA, block]
     }
   )
 

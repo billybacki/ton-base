@@ -1,7 +1,7 @@
 import { ReactNode, createContext, useContext, useEffect, useState } from 'react'
 
 interface BlockContextType {
-  block: number
+  block: number | undefined
   setBlock?: (name: string) => void
 }
 
@@ -10,15 +10,15 @@ const Blocks = createContext<BlockContextType>({
 })
 
 export const useBlockNumber = () => {
-  const { block } = useContext(Blocks)
-  if (!block) {
+  const content = useContext(Blocks)
+  if (!content) {
     throw new Error('useBlockNumber must be used within a Blocks Provider')
   }
-  return block
+  return content.block
 }
 
 export default function SSEProvider({ children }: { children: ReactNode }) {
-  const [block, setBlock] = useState(1)
+  const [block, setBlock] = useState()
 
   useEffect(() => {
     function connectToSSE(url: string, retryInterval: number = 5000): void {
@@ -29,7 +29,7 @@ export default function SSEProvider({ children }: { children: ReactNode }) {
 
         eventSource.onmessage = (event: MessageEvent) => {
           const data: any = JSON.parse(event.data)
-          setBlock(data.seqno)
+          setBlock(data?.seqno)
         }
 
         eventSource.onerror = () => {

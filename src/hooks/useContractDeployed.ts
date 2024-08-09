@@ -1,10 +1,12 @@
 import { useTonClient } from './useTonClient'
 import { useRequest } from 'ahooks'
 import { Address } from '@ton/ton'
+import { useBlockNumber } from '@/provider/BlockSSEProvider'
 
 // todo query once?
 export function useContractDeployed(contractAddress?: string) {
   const client = useTonClient()
+  const block = useBlockNumber()
 
   const { data } = useRequest<boolean | undefined, []>(
     async () => {
@@ -19,8 +21,7 @@ export function useContractDeployed(contractAddress?: string) {
       ready: !!client && !!contractAddress,
       cacheKey: `useContractDeployed-${contractAddress}`,
       staleTime: 10_000,
-      pollingInterval: 10_000,
-      refreshDeps: [client, contractAddress]
+      refreshDeps: [client, contractAddress, block]
     }
   )
 

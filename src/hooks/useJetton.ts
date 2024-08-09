@@ -43,7 +43,7 @@ export function useJettonMasterData(jettonMasterContract?: string) {
     {
       ready: !!jettonMasterContract,
       cacheKey: `useJettonMasterData-${jettonMasterContract}`,
-      staleTime: 600_000,
+      staleTime: -1,
       refreshDeps: [jettonMasterContract]
     }
   )
@@ -69,7 +69,7 @@ export function useUserJettonWallet(jettonMasterContract?: string) {
     {
       ready: !!client && !!jettonMasterContract && !!tonAddress,
       cacheKey: `useUserJettonWallet-${jettonMasterContract}-${tonAddress}`,
-      staleTime: 600_000,
+      staleTime: -1,
       refreshDeps: [client, jettonMasterContract, tonAddress]
     }
   )
