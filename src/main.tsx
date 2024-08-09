@@ -7,6 +7,7 @@ import { ModalProvider } from './provider/ModalProvider'
 import NiceModal from '@ebay/nice-modal-react'
 import App from './App'
 import { TonConnectUIProvider } from '@tonconnect/ui-react'
+import BlockSSEProvider from './provider/BlockSSEProvider'
 
 const container = document.getElementById('root')
 const root = createRoot(container!)
@@ -59,18 +60,19 @@ root.render(
       //   twaReturnUrl: 'https://t.me/DemoDappWithTonConnectBot/demo'
       // }}
     >
-      {' '}
-      <StateProvider>
-        <MuiThemeProvider>
-          <NiceModal.Provider>
-            <ModalProvider>
-              <BrowserRouter>
-                <App />
-              </BrowserRouter>
-            </ModalProvider>
-          </NiceModal.Provider>
-        </MuiThemeProvider>
-      </StateProvider>
+      <BlockSSEProvider>
+        <StateProvider>
+          <MuiThemeProvider>
+            <NiceModal.Provider>
+              <ModalProvider>
+                <BrowserRouter>
+                  <App />
+                </BrowserRouter>
+              </ModalProvider>
+            </NiceModal.Provider>
+          </MuiThemeProvider>
+        </StateProvider>
+      </BlockSSEProvider>
     </TonConnectUIProvider>
   </StrictMode>
 )
