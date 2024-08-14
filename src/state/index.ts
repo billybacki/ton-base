@@ -3,11 +3,12 @@ import { combineReducers } from 'redux'
 import { load, save } from 'redux-localstorage-simple-next'
 import application from './application/reducer'
 import { updateVersion } from './global/actions'
-
+import users from './users/reducer'
 const PERSISTED_KEYS: string[] = ['transactions']
 
 const reducer = combineReducers({
-  application
+  application,
+  users
 })
 
 const store = configureStore({
