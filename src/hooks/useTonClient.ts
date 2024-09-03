@@ -8,7 +8,11 @@ export function useTonClient() {
     async () =>
       new TonClient({
         endpoint: await getHttpEndpoint({ network: CURRENT_NETWORK_NAME })
-      })
+      }),
+    {
+      staleTime: -1,
+      cacheKey: 'useTonClient'
+    }
   )
 
   return data

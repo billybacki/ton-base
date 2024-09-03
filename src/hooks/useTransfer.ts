@@ -18,7 +18,7 @@ export function useTonTransfer() {
             amount: toNano(value).toString(),
             // todo src type
             payload: body
-              ? beginCell().storeUint(0, 64).storeStringTail(body).endCell().toBoc({ idx: false }).toString('base64')
+              ? beginCell().storeUint(0, 32).storeStringTail(body).endCell().toBoc({ idx: false }).toString('base64')
               : undefined
           }
         ]
