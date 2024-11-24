@@ -1,3 +1,4 @@
+import { useTonProof } from '@/hooks/useBackendAuth'
 import { useJettonBalance, useTonBalance } from '@/hooks/useBalance'
 import { useCounterContract } from '@/hooks/useCounterContract'
 import { useJettonMasterData } from '@/hooks/useJetton'
@@ -21,6 +22,9 @@ export default function Test1() {
   console.log('🚀 ~ Test1 ~ tonBalance:', tonBalance?.toSignificant())
 
   const { value: counterValue, contractAddress, sendIncrement } = useCounterContract()
+
+  const tonProof = useTonProof()
+  console.log('🚀 ~ Test1 ~ tonProof:', tonProof)
 
   return (
     <Container maxWidth="lg">

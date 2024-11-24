@@ -1,20 +1,34 @@
-import { useContext, useEffect, useRef } from 'react'
+import { useCallback, useEffect, useMemo, useRef } from 'react'
 import { useIsConnectionRestored, useTonConnectUI, useTonWallet } from '@tonconnect/ui-react'
 import { backendAuth } from './backend-auth'
-import { BackendTokenContext } from '@/provider/BackendTokenProvider'
+import { useUserInfo } from '@/state/users/hooks'
+import { useDispatch } from 'react-redux'
 
 const localStorageKey = 'dapp-auth-token'
 const payloadTTLMS = 1000 * 60 * 20
 
 export function useBackendAuth() {
-  const { setToken } = useContext(BackendTokenContext)
   const isConnectionRestored = useIsConnectionRestored()
   const wallet = useTonWallet()
   const [tonConnectUI] = useTonConnectUI()
   const interval = useRef<ReturnType<typeof setInterval> | undefined>()
-
+  const dispatch = useDispatch()
+  const userInfo = useUserInfo()
+  const setToken = useCallback(
+    (token: string) => {
+      dispatch({
+        type: 'users/saveLoginInfo',
+        payload: {
+          userId: userInfo.userId,
+          address: userInfo.address,
+          token
+        }
+      })
+    },
+    [dispatch, userInfo.address, userInfo.userId]
+  )
   useEffect(() => {
-    if (!isConnectionRestored || !setToken) {
+    if (!isConnectionRestored) {
       return
     }
 
@@ -22,12 +36,18 @@ export function useBackendAuth() {
 
     if (!wallet) {
       localStorage.removeItem(localStorageKey)
-      setToken(null)
+      if (userInfo.token) {
+        setToken('')
+      }
 
       const refreshPayload = async () => {
         tonConnectUI.setConnectRequestParameters({ state: 'loading' })
 
-        const value = await backendAuth.generatePayload()
+        // TODO: get sign payload
+        // const value = await backendAuth.generatePayload()
+
+        // test payload
+        const value = { tonProof: 'test' }
         if (!value) {
           tonConnectUI.setConnectRequestParameters(null)
         } else {
@@ -41,7 +61,7 @@ export function useBackendAuth() {
     }
 
     const token = localStorage.getItem(localStorageKey)
-    if (token) {
+    if (token && token !== userInfo.token) {
       setToken(token)
       return
     }
@@ -53,13 +73,27 @@ export function useBackendAuth() {
           setToken(result)
           localStorage.setItem(localStorageKey, result)
         } else {
-          alert('Please try another wallet')
-          tonConnectUI.disconnect()
+          console.log('have signed but not verify')
+
+          // tonConnectUI.disconnect()
         }
       })
     } else {
-      alert('Please try another wallet')
-      tonConnectUI.disconnect()
+      console.log('have signed but not verify')
+      // tonConnectUI.disconnect()
     }
-  }, [wallet, isConnectionRestored, setToken, tonConnectUI])
+  }, [wallet, isConnectionRestored, setToken, tonConnectUI, userInfo.token])
+}
+
+export function useTonProof() {
+  const wallet = useTonWallet()
+  return useMemo(() => {
+    if (!wallet) {
+      return
+    }
+    if (wallet.connectItems?.tonProof && !('error' in wallet.connectItems.tonProof)) {
+      return wallet.connectItems.tonProof.proof
+    }
+    return
+  }, [wallet])
 }
